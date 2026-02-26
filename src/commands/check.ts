@@ -46,18 +46,31 @@ const checkOptionsSchema = z.object({
 export const check = {
 	register(cli: CAC) {
 		cli
-			.command("check <...packages>")
-			.option("--target [package]", "Package use to check compatibility", {
-				default: [],
-			})
+			.command(
+				"check <...packages>",
+				"Check compatibility between npm packages, targets, and runtime engines.",
+			)
+			.option(
+				"--target [package]",
+				"One or more target packages to compare against (can be repeated).",
+				{
+					default: [],
+				},
+			)
 			.option(
 				"--engine <engine>",
-				"Validates compatibility with the engine (e.g: node=20)",
+				"Validate engine constraints (repeatable), e.g. --engine node=20.",
 			)
-			.option("--json", "Output as JSON", { default: false })
-			.option("--cwd <path>", "Current working directory", {
-				default: process.cwd(),
+			.option("--json", "Print JSON output for automation/CI.", {
+				default: false,
 			})
+			.option(
+				"--cwd <path>",
+				"Working directory used to resolve package.json.",
+				{
+					default: process.cwd(),
+				},
+			)
 			.action(async (pkgs, opts) => {
 				try {
 					const options = checkOptionsSchema.parse({ pkgs, ...opts });
@@ -72,7 +85,7 @@ export const check = {
 
 					if (!hasTargetsPackages && !hasPackageJson) {
 						cancel(
-							`No packages provided. Use ${kleur.italic().bold(`--target`)} or ensure a ${kleur.italic().bold(`package.json`)} exists in the ${kleur.italic().bold(`cwd`)}.`,
+							`No target packages were provided. Use ${kleur.italic().bold(`--target`)} or ensure a ${kleur.italic().bold(`package.json`)} exists in ${kleur.italic().bold(`--cwd`)}.`,
 						);
 
 						return process.exit(EXIT_CODES.MISSING_ARGS);
@@ -96,13 +109,13 @@ export const check = {
 						);
 
 						const selectedDependencies = await multiselect({
-							message: "Select the target packages to check compatibility:",
+							message: `Select dependencies from ${kleur.italic().bold(`package.json`)} to use as target packages:`,
 							options: projectDependenciesOptions,
 							required: true,
 						});
 
 						if (isCancel(selectedDependencies)) {
-							return cancel("Operation cancelled");
+							return cancel("Operation canceled.");
 						}
 
 						baseTargetsPackages.push(...selectedDependencies);
@@ -163,7 +176,7 @@ export const check = {
 						}),
 					);
 
-					return outro(kleur.green("Compatibility check completed!"));
+					return outro(kleur.green("Compatibility check completed."));
 				} catch (error) {
 					if (error instanceof ZodError) {
 						log.error(z.prettifyError(error));
