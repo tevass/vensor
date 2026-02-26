@@ -1,32 +1,53 @@
 {
 	"name": "@tev4ss/vensor",
 	"version": "0.1.0",
-	"description": "",
-	"type": "module",
-	"bin": {
-		"versor": "./bin/vensor.js"
+	"description": "CLI to validate npm package compatibility across dependencies, peerDependencies, and runtime engines.",
+	"keywords": [
+		"cli",
+		"npm",
+		"compatibility",
+		"peer-dependencies",
+		"dependencies",
+		"engines",
+		"node",
+		"semver",
+		"validation",
+		"ci"
+	],
+	"author": {
+		"name": "Estevão",
+		"url": "http://github.com/tevass"
 	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/tevass/vensor.git"
+	},
+	"homepage": "https://github.com/tevass/vensor",
+	"bugs": {
+		"url": "https://github.com/tevass/vensor/issues"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"engines": {
+		"node": ">=18"
+	},
+	"license": "ISC",
+	"bin": {
+		"vensor": "./bin/vensor.js"
+	},
+	"type": "module",
 	"scripts": {
 		"build": "tsup",
-		"dev": "tsup --watch",
 		"dev:exec": "tsx src/cli.ts",
-		"lint:fix": "biome format --write ."
+		"lint:fix": "biome format --write .",
+		"pub:release": "pnpm build && pnpm publish --access public"
 	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
+	"files": [
+		"bin",
+		"dist"
+	],
 	"packageManager": "pnpm@10.22.0",
-	"devDependencies": {
-		"@biomejs/biome": "2.4.3",
-		"@types/node": "^25.3.0",
-		"@types/npm-package-arg": "^6.1.4",
-		"@types/semver": "^7.7.1",
-		"@types/treeify": "^1.0.3",
-		"tsup": "^8.5.1",
-		"tsx": "^4.21.0",
-		"type-fest": "^5.4.4",
-		"typescript": "^5.9.3"
-	},
 	"dependencies": {
 		"@clack/prompts": "^1.0.1",
 		"boxen": "^8.0.1",
@@ -37,5 +58,16 @@
 		"semver": "^7.7.4",
 		"treeify": "^1.1.0",
 		"zod": "^4.3.6"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.4.3",
+		"@types/node": "^25.3.0",
+		"@types/npm-package-arg": "^6.1.4",
+		"@types/semver": "^7.7.1",
+		"@types/treeify": "^1.0.3",
+		"tsup": "^8.5.1",
+		"tsx": "^4.21.0",
+		"type-fest": "^5.4.4",
+		"typescript": "^5.9.3"
 	}
 }

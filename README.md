@@ -114,8 +114,8 @@ Outputs structured JSON for automation and CI pipelines.
 
 ```bash
 pnpm install
-pnpm build
-pnpm exec vensor ...
+pnpm link --global
+vensor ...
 ```
 
 Run CLI in dev mode:
