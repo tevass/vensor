@@ -11,3 +11,7 @@ cli.help();
 cli.version(VERSION);
 
 cli.parse();
+
+if (!cli.matchedCommand) {
+	cli.outputHelp();
+}
