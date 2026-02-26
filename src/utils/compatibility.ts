@@ -94,10 +94,7 @@ export function buildCompatibilityGroups({
 
 				return groups;
 			},
-			{
-				dependencies: [],
-				peerDependencies: [],
-			} as PackageDependencyGroups,
+			{} as PackageDependencyGroups,
 		);
 
 		const engines = enginesSpecs.map<CompatibilityResult>(

@@ -15,7 +15,7 @@ export const PACKAGE_DEPENDENCY_KEYS = [
 ] as const;
 
 export const EXIT_CODES = {
-	UNCUGHT_FATAL: 1,
+	UNCAUGHT: 1,
 	MISSING_ARGS: 64,
 	INVALID_ARGS: 65,
 };

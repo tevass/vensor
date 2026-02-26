@@ -20,11 +20,12 @@ import {
 const stringArray = z
 	.array(z.string())
 	.or(z.string())
-	.transform((value) => (Array.isArray(value) ? value : [value]));
+	.transform((value) => (Array.isArray(value) ? value : [value]))
+	.pipe(z.array(z.string()));
 
 const checkOptionsSchema = z.object({
 	pkgs: z.array(z.string()),
-	target: stringArray.pipe(z.array(z.string())),
+	target: stringArray,
 	json: z.boolean(),
 	cwd: z.string(),
 	engine: stringArray
@@ -170,7 +171,7 @@ export const check = {
 					}
 
 					log.error(error);
-					return process.exit(EXIT_CODES.UNCUGHT_FATAL);
+					return process.exit(EXIT_CODES.UNCAUGHT);
 				}
 			});
 	},
